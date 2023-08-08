@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FLAMES Game</title>
+</head>
+<body>
+    <h1>FLAMES Game</h1>
+    <form id="flamesForm">
+        <label for="yourName">Your Name:</label>
+        <input type="text" id="yourName" name="yourName" required><br><br>
+        
+        <label for="partnerName">Partner's Name:</label>
+        <input type="text" id="partnerName" name="partnerName" required><br><br>
+        
+        <button type="button" onclick="calculateFlames()">Calculate FLAMES</button>
+    </form>
+    
+    <p id="result"></p>
+    
+    <script>
+        function calculateFlames() {
+            const yourName = document.getElementById("yourName").value.toLowerCase().replace(/\s/g, "");
+            const partnerName = document.getElementById("partnerName").value.toLowerCase().replace(/\s/g, "");
+            const flames = "flames";
+            
+            for (const char of yourName) {
+                if (partnerName.includes(char)) {
+                    partnerName.replace(char, "");
+                }
+            }
+            
+            for (const char of partnerName) {
+                if (yourName.includes(char)) {
+                    yourName.replace(char, "");
+                }
+            }
+            
+            const resultIndex = (yourName.length + partnerName.length) % flames.length;
+            const resultMapping = {
+                'f': 'Friends 👫',
+                'l': 'Lovers 💑',
+                'a': 'Affection ❤️',
+                'm': 'Marriage 💍',
+                'e': 'Enemies 👿',
+                's': 'Siblings 👯‍♂️'
+            };
+            
+            const result = resultMapping[flames[resultIndex]];
+            document.getElementById("result").innerText = `You are ${result}!`;
+        }
+    </script>
+</body>
+</html>
